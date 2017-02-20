@@ -1,7 +1,11 @@
 (ns mdm-server.core
-  (:gen-class))
+  (:gen-class)
+  (:require [mount.core :as mount]
+            [mdm-server.db.entities :as entities]
+            [mdm-server.config :as config]
+            [mdm-server.web.server :as server]))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!" (str args)))
+  (println "starting..")
+  (mount/start))

@@ -7,7 +7,7 @@
 
 
 
-(declare *conn*)
+(declare conn)
 
 (defn start-default-connection-pool
   []
@@ -17,8 +17,8 @@
 
 (defn close-connection-pool
   []
-  (.close (:datasource @(:pool *conn*))))
+  (.close (:datasource @(:pool conn))))
 
-(defstate ^:dynamic *conn*
+(defstate conn
   :start (start-default-connection-pool)
   :stop (close-connection-pool))
