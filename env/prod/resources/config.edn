@@ -1,0 +1,6 @@
+{:name "user"
+ :db {:port     "32768"
+      :host     "localhost"
+      :user     "postgres"
+      :password "password"
+      :db       "mdm"}}
