@@ -5,7 +5,8 @@
             [mdm-server.db.ext]
             [mdm-server.db.entities.common-specs :refer :all]
             [schema.spec.core :as spec]
-            [clj-time.coerce :as c]))
+            [clj-time.coerce :as c])
+  (:import java.util.UUID))
 
 
 
@@ -22,3 +23,13 @@
 (defn create-device!
   [device]
   (korma/insert devices (korma/values device)))
+
+(defn register-device!
+  [params]
+  (let [uuid (java.util.UUID/randomUUID)
+        device (create-device! (merge params {:access_token uuid}))]
+    device))
+
+
+(defn find [key val]
+  (korma/select devices (korma/where (= key val))))

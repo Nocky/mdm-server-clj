@@ -8,12 +8,20 @@
 
 
 
+(defn register-device
+  [device]
+  (if (seq (devices/find :unique_id (:unique_id device)))
+    (internal-server-error {:error "device already registered!!"})
+    (ok {:access-token   (let [r-device (devices/register-device! device)]
+                           (str (:access_token r-device)))})))
+
+
 (def app
   (api
    {:swagger
     {:ui "/api-docs"
      :spec "/swagger.json"
-     :data {:info {:title       "MDM Server"
+     :data {:info {:title  "MDM Server"
                    :description "MDM Server APIS"}
             :tags [{:name "api", :description "Device APIs"}]}}}
 
@@ -23,6 +31,4 @@
                   :return {:access-token s/Str}
                   :body-params [device :- devices/schema]
                   :summary "Register a new device"
-                  (ok {:access-token (do (println (str "Registering device"))
-                                         (let [r-device (devices/create-device! device)]
-                                           (str  (:id r-device))))})))))
+                  (register-device device)))))
