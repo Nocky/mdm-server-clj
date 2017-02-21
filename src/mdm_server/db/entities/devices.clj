@@ -43,3 +43,9 @@
 
 (defn find [key val]
   (korma/select devices (korma/where (= key val))))
+
+(defn update-device-last-seen
+  [device-unique-id]
+  (korma/update devices
+    (korma/set-fields {:last_seen (time/now)})
+    (korma/where {:unique_id device-unique-id})))

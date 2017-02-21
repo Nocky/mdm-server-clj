@@ -15,6 +15,8 @@
                  [prismatic/schema "1.1.3"]
                  [mount "0.1.11"]
                  [clojure-future-spec "1.9.0-alpha14"]
+                 [com.novemberain/langohr "3.6.1"]
+                 [cheshire "5.7.0"]
                  [clj-time "0.13.0"]]
 
   :plugins [[migratus-lein "0.4.2"]]
