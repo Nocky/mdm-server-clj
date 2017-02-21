@@ -3,7 +3,6 @@
             [schema.core :as s]
             [clj-time.core :as time]
             [mdm-server.db.ext]
-            [mdm-server.db.entities.common-specs :refer :all]
             [schema.spec.core :as spec]
             [clj-time.coerce :as c])
   (:import java.util.UUID))
@@ -22,13 +21,24 @@
 
 (defn create-device!
   [device]
+  (println (str "registering device" device))
   (korma/insert devices (korma/values device)))
 
 (defn register-device!
   [params]
   (let [uuid (java.util.UUID/randomUUID)
-        device (create-device! (merge params {:access_token uuid}))]
+        device (create-device! (merge params {:access_token uuid
+                                              :created_at (time/now)
+                                              :updated_at (time/now)}))]
     device))
+
+(defn re-register-device!
+  [device params]
+  (korma/update
+   devices
+   (korma/set-fields (merge (dissoc params :unique_id) {:updated_at (time/now)}))
+   (korma/where {:unique_id (:unique_id device)}))
+  device)
 
 
 (defn find [key val]

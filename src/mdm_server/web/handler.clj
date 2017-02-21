@@ -9,11 +9,13 @@
 
 
 (defn register-device
-  [device]
-  (if (seq (devices/find :unique_id (:unique_id device)))
-    (internal-server-error {:error "device already registered!!"})
-    (ok {:access-token   (let [r-device (devices/register-device! device)]
-                           (str (:access_token r-device)))})))
+  [params]
+  (ok
+   {:access_token
+    (str (:access_token
+          (if-let [device (first  (devices/find :unique_id (:unique_id params)))]
+            (devices/re-register-device! device params)
+            (devices/register-device! params))))}))
 
 
 (def app
@@ -28,7 +30,7 @@
    (context "/api" []
             :tags ["api"]
             (POST "/register" []
-                  :return {:access-token s/Str}
-                  :body-params [device :- devices/schema]
+                  :return {:access_token s/Str}
+                  :body-params [params :- devices/schema]
                   :summary "Register a new device"
-                  (register-device device)))))
+                  (register-device params)))))
