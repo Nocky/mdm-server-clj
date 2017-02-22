@@ -1,11 +1,11 @@
 {:name "user"
- :db {:port     "32768"
-      :host     "localhost"
+ :db {:port     "5432"
+      :host     "database"
       :user     "postgres"
-      :password "password"
+      :password ""
       :db       "mdm"}
  :rabbitmq {:username "guest"
             :password "guest"
             :vhost "/"
-            :host "localhost"
+            :host "rabbitmq"
             :port 5672}}
