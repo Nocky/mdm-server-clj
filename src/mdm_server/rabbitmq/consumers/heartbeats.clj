@@ -3,7 +3,8 @@
             [mdm-server.db.entities.devices :refer [update-device-last-seen]]
             [langohr.queue :as langohr-queue]
             [langohr.consumers :as langohr-consumers]
-            [cheshire.core :refer [parse-string]]))
+            [cheshire.core :refer [parse-string]]
+            [mount.core :as mount :refer [defstate]]))
 
 (defn heartbeats-handler
   [channel metadata ^bytes payload]
@@ -13,4 +14,8 @@
 (defn consume
   []
   (let [queue-name "events"]
+    (println "[Heartbeat Consumer] Starting....")
     (langohr-consumers/subscribe rabbitmq-channel queue-name heartbeats-handler {:auto-ack true})))
+
+(defstate heartbeats-consumer
+  :start (consume))
