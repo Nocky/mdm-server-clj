@@ -12,11 +12,12 @@
 (defentity devices)
 
 (s/def schema
-  {(s/optional-key  :model)      s/Str
-   (s/required-key :unique_id )  s/Str
-   (s/required-key :imei_number) s/Str
-   (s/optional-key  :os_version) s/Str
-   (s/optional-key :last_seen)   org.joda.time.DateTime})
+  {(s/optional-key  :model)          s/Str
+   (s/required-key :unique_id )      s/Str
+   (s/required-key :imei_number)     s/Str
+   (s/optional-key  :os_version)     s/Str
+   (s/optional-key  :client_version) s/Str
+   (s/optional-key :last_seen)       org.joda.time.DateTime})
 
 
 (defn create-device!

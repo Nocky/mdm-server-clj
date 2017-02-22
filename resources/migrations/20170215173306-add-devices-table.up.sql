@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS devices (id SERIAL PRIMARY KEY,
                                     imei_number VARCHAR(40),
                                     os_version VARCHAR(40),
                                     access_token VARCHAR(40),
+                                    client_version VARCHAR(40),
                                     last_seen TIMESTAMP WITH TIME ZONE,
                                     created_at TIMESTAMP WITH TIME ZONE,
                                     updated_at TIMESTAMP WITH TIME ZONE);

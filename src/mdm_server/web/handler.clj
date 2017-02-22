@@ -31,6 +31,6 @@
             :tags ["api"]
             (POST "/register" []
                   :return {:access_token s/Str}
-                  :body-params [params :- devices/schema]
+                  :body-params [device :- devices/schema]
                   :summary "Register a new device"
-                  (register-device params)))))
+                  (register-device device)))))
