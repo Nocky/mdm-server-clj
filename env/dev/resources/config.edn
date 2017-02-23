@@ -2,7 +2,7 @@
  :db {:port     "5432"
       :host     "database"
       :user     "postgres"
-      :password "password"
+      :password ""
       :db       "mdm"}
  :rabbitmq {:username "guest"
             :password "guest"

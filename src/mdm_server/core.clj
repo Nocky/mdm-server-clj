@@ -1,7 +1,7 @@
 (ns mdm-server.core
   (:gen-class)
   (:require [mount.core :as mount]
-            [mdm-server.db.entities :as entities]
+            [mdm-server.db.entities]
             [mdm-server.rabbitmq.connections ]
             [mdm-server.rabbitmq.consumers.heartbeats :as heartbeats]
             [mdm-server.config :as config]

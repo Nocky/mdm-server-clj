@@ -4,7 +4,7 @@
             [langohr.queue :as langohr-queue]
             [langohr.consumers :as langohr-consumers]
             [cheshire.core :refer [parse-string]]
-            [mount.core :as mount]))
+            [mount.core :as mount :refer [defstate]]))
 
 (defn heartbeats-handler
   [channel metadata ^bytes payload]
@@ -17,5 +17,6 @@
     (langohr-queue/declare rabbitmq-channel queue-name)
     (langohr-consumers/subscribe rabbitmq-channel queue-name heartbeats-handler {:auto-ack true})))
 
-(mount/defstate conumser
+
+(defstate heartbeats-consumer
   :start (consume))
