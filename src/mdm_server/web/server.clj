@@ -7,5 +7,5 @@
 
 
 (mount/defstate server
-  :start (jetty/run-jetty app {:port (get conf/env :http-port 3000)})
+  :start (jetty/run-jetty app {:port (get conf/env :http-port 3000) :join? false})
   :stop (.stop server))

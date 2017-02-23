@@ -10,12 +10,16 @@
 (mount/defstate config
   :start {:store         :database
           :migration-dir "migrations/"
-          :db            (korma-db/postgres (conf/env :db))})
+          :init-script   "init.sql" })
 
 
 (defn migrate []
-  (migratus/migrate config))
+  (migratus/migrate (merge  config {:db (korma-db/postgres (conf/env :db))})))
 
+(defn init
+  []
+  (let [config (merge config {:db (korma-db/postgres (dissoc (conf/env :db) :db))})]
+    (migratus/init config)))
 
 (defn rollback []
   (migratus/rollback config))

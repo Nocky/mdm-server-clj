@@ -9,7 +9,10 @@
 
 (defn start-rabbitmq-connection
   []
-  (let [rabbitmq-connection (langohr.core/connect (env :rabbitmq))]
+  (let [rabbitmq-connection (do
+                              (println "sleeping for 5 secs.... --- ******************************")
+                              (Thread/sleep 5000)
+                              (langohr.core/connect (env :rabbitmq)))]
     rabbitmq-connection))
 
 (defn establish-rabbitmq-channel

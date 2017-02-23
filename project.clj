@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [korma "0.4.0"]
                  [postgresql/postgresql "9.3-1102.jdbc41"]
-                 [migratus "0.8.14"]
+                 [migratus "0.8.32"]
                  [korma "0.4.3"]
                  [cprop "0.1.10"]
                  [metosin/ring-swagger-ui "2.2.8"]

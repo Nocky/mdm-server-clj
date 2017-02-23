@@ -4,9 +4,19 @@ services:
     image: andrewkeig/rabbitmq-mqtt-enabled
     ports:
       - "15672:15672"
-      - "5672:5672"
       - "1883:1883"
   db:
     image: postgres
+  mdm-server:
+    image: java-lein
+    depends_on:
+      - rabbitmq
+      - db
+    volumes:
+    - .:/app
+    command: run
     ports:
-      - "5432:5432"
+      - "3000:3000"
+    links:
+      - "db:database"
+      - "rabbitmq:rabbitmq"
