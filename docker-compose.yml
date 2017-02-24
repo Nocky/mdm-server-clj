@@ -8,7 +8,9 @@ services:
   db:
     image: postgres
   mdm-server:
-    image: java-lein
+    build:
+      context: ./
+      dockerfile: Dockerfile
     depends_on:
       - rabbitmq
       - db
