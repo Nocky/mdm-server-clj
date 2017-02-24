@@ -46,7 +46,7 @@
   (korma/select devices (korma/where (= key val))))
 
 (defn update-device-last-seen
-  [device-unique-id]
+  [device-access-token]
   (korma/update devices
     (korma/set-fields {:last_seen (time/now)})
-    (korma/where {:unique_id device-unique-id})))
+    (korma/where {:access_token device-access-token})))

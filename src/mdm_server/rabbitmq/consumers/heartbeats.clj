@@ -9,7 +9,7 @@
 (defn heartbeats-handler
   [channel metadata ^bytes payload]
   (let [parsed-payload (parse-string (String. payload "UTF-8") true)]
-    (update-device-last-seen (:unique_id parsed-payload)) true))
+    (update-device-last-seen (:access_token parsed-payload)) true))
 
 (defn consume
   []
