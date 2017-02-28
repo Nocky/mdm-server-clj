@@ -22,7 +22,7 @@
     (migratus/init config)))
 
 (defn rollback []
-  (migratus/rollback config))
+  (migratus/rollback (merge  config {:db (korma-db/postgres (conf/env :db))})))
 
 
 (defn -main [& args]
