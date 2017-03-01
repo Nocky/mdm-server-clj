@@ -10,12 +10,15 @@
   {(s/required-key :status) s/Str
    (s/optional-key :instruction) s/Str})
 
+(defn find [key val]
+  (korma/select instructions (korma/with devices) (korma/where (= key val))))
+
 (defn create-instruction!
   [instruction]
   (korma/insert instructions (korma/values instruction)))
 
-(defn update-instruction
-  [instruction-id]
+(defn update-instruction-status
+  [id status]
   (korma/update instructions
-    (korma/set-fields {:status "processed"})
-    (korma/where {:id instruction-id})))
+    (korma/set-fields {:status status})
+    (korma/where {:id id})))
