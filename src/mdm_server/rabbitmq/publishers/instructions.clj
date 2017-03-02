@@ -2,16 +2,24 @@
   (:require [mdm-server.rabbitmq.connections :refer [rabbitmq-connection rabbitmq-channel]]
             [mdm-server.db.entities.instructions :as instructions]
             [langohr.basic :as langohr-basic]
+            [langohr.queue :as langohr-queue]
             [langohr.confirm :as langohr-confirm]))
 
-(defn return-handler
-  [reply-code reply-text exchange routing-key properties body]
-  (instructions/update-instruction-status (Integer. (.getMessageId properties)) "unprocessed"))
+(defn device-queue-name
+  [client-id]
+  (str "mqtt-subscription-" client-id "qos1"))
 
 (defn publish-instruction
   [instruction]
   (instructions/update-instruction-status (:id instruction) "processing")
-  (langohr-basic/publish rabbitmq-channel "amq.topic" (str "devices." (:access_token instruction)) (:instruction instruction) {:mandatory true :message-id (str (:id instruction))}))
+  (langohr-basic/publish rabbitmq-channel "" (device-queue-name (:access_token instruction)) (:instruction instruction) {:mandatory true :message-id (str (:id instruction))}))
+
+(defn return-handler
+  [reply-code reply-text exchange routing-key properties body]
+  (let [instruction (first (instructions/find :id (Integer. (.getMessageId properties))))
+        queue-name (device-queue-name (:access_token instruction))]
+    (langohr-queue/declare rabbitmq-channel queue-name {:durable true})
+    (publish-instruction instruction)))
 
 (defn process
   []
