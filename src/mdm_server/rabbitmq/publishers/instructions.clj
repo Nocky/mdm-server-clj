@@ -11,7 +11,7 @@
 (defn publish-instruction
   [instruction]
   (instructions/update-instruction-status (:id instruction) "processing")
-  (langohr-basic/publish rabbitmq-channel "amq.topic" (:access_token instruction) (:instruction instruction) {:mandatory true :message-id (str (:id instruction))}))
+  (langohr-basic/publish rabbitmq-channel "amq.topic" (str "devices." (:access_token instruction)) (:instruction instruction) {:mandatory true :message-id (str (:id instruction))}))
 
 (defn process
   []
